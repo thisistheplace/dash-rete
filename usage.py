@@ -1,24 +1,15 @@
 import dash_rete
-import dash
-from dash.dependencies import Input, Output
-import dash_html_components as html
+from dash import Dash, html
 
-app = dash.Dash(__name__)
+app = Dash(__name__)
 
-app.layout = html.Div([
-    dash_rete.DashRete(
-        id='input',
-        value='my-value',
-        label='my-label'
-    ),
-    html.Div(id='output')
-])
-
-
-@app.callback(Output('output', 'children'), [Input('input', 'value')])
-def display_output(value):
-    return 'You have entered {}'.format(value)
-
+app.layout = html.Div(
+    dash_rete.DashRete("test"),
+    style={
+        "height":"100vh",
+        "width":"100vw"
+    }
+)
 
 if __name__ == '__main__':
     app.run_server(debug=True)

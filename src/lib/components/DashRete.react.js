@@ -1,38 +1,19 @@
-import React, {Component} from 'react';
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
+import { useRete } from "../rete/rete";
 
-/**
- * ExampleComponent is an example component.
- * It takes a property, `label`, and
- * displays it.
- * It renders an input with the property `value`
- * which is editable by the user.
- */
-export default class DashRete extends Component {
-    render() {
-        const {id, label, setProps, value} = this.props;
+const DashRete = (props) => {
+  const [setContainer] = useRete();
 
-        return (
-            <div id={id}>
-                ExampleComponent: {label}&nbsp;
-                <input
-                    value={value}
-                    onChange={
-                        /*
-                         * Send the new value to the parent component.
-                         * setProps is a prop that is automatically supplied
-                         * by dash's front-end ("dash-renderer").
-                         * In a Dash app, this will update the component's
-                         * props and send the data back to the Python Dash
-                         * app server if a callback uses the modified prop as
-                         * Input or State.
-                         */
-                        e => setProps({ value: e.target.value })
-                    }
-                />
-            </div>
-        );
-    }
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh"
+      }}
+      ref={(ref) => ref && setContainer(ref)}
+    />
+  );
 }
 
 DashRete.defaultProps = {};
@@ -41,12 +22,12 @@ DashRete.propTypes = {
     /**
      * The ID used to identify this component in Dash callbacks.
      */
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
 
     /**
      * A label that will be printed when this component is rendered.
      */
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
 
     /**
      * The value displayed in the input.
@@ -59,3 +40,5 @@ DashRete.propTypes = {
      */
     setProps: PropTypes.func
 };
+
+export default DashRete
